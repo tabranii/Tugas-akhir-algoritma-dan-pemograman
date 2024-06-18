@@ -1,0 +1,118 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Nama : Muhammad Tabrani Shabirin
+// NIM : 12250513824
+
+bool login();
+void displayMenu();
+void checkBalance(double balance);
+double deposit(double balance);
+double withdraw(double balance);
+
+int main() {
+    double balance = 100000;
+    int choice;
+
+    if (!login()) {
+        cout << "Terlalu Banyak Kesalahan. Dikeluarkan..." << endl;
+        return 0;
+    }
+
+    cout << "Selamat datang di BANK TABRANI" << endl;
+
+    do {
+        displayMenu();
+
+        cout << "Pilih: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                checkBalance(balance);
+                break;
+            case 2:
+                balance = deposit(balance);
+                break;
+            case 3:
+                balance = withdraw(balance);
+                break;
+            case 4:
+                cout << "Terima Kasih !" << endl;
+                break;
+            default:
+                cout << "Terjadi Kesalahan." << endl;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+
+bool login() {
+    string username;
+    int pin;
+    const int MAX_ATTEMPTS = 3;
+    int attempts = 0;
+
+    while (attempts < MAX_ATTEMPTS) {
+        cout << "Masukkan username: ";
+        cin >> username;
+        cout << "Masukkan PIN: ";
+        cin >> pin;
+
+        if (username == "tabrani" && pin == 1234) {
+            return true;
+        } else {
+            cout << "Salah PIN dan Username. Dikeluarkan....." << endl;
+            attempts++;
+        }
+    }
+
+    return false;
+}
+
+
+void displayMenu() {
+    cout << endl;
+    cout << "ATM Menu:" << endl;
+    cout << "1. Lihat Saldo" << endl;
+    cout << "2. Deposit Saldo" << endl;
+    cout << "3. Menarik Saldo" << endl;
+    cout << "4. Keluar" << endl;
+}
+
+
+void checkBalance(double balance) {
+    cout << "Saldo Anda: RP." << balance << endl;
+}
+
+
+double deposit(double balance) {
+    double amount;
+    cout << "Masukkan Saldo: RP.";
+    cin >> amount;
+
+    if (amount > 0) {
+        balance += amount;
+        cout << "Deposit Saldo Berhasil!" << endl;
+    } else {
+        cout << "Terjadi Kesalahan." << endl;
+    }
+    return balance;
+}
+
+
+double withdraw(double balance) {
+    double amount;
+    cout << "Menarik Saldo: RP.";
+    cin >> amount;
+
+    if (amount > 0 && amount <= balance) {
+        balance -= amount;
+        cout << "Penarikan Berhasil!" << endl;
+    } else {
+        cout << "Terjadi Kesalahan." << endl;
+    }
+    return balance;
+}
